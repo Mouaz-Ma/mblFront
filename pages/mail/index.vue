@@ -104,7 +104,7 @@
       ],
     }),
             async asyncData({
-      $axios
+      $axios,$auth
     }) {
       try {
           if($auth.$state.user.userName === 'jim'){
