@@ -276,6 +276,7 @@
 <script>
 import navBar from '../components/navBar.vue'
 export default {
+      auth: false,
     components: { navBar },
   name: 'IndexPage',
    data () {
