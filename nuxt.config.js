@@ -36,15 +36,28 @@ export default {
     '@nuxtjs/vuetify',
   ],
 
+
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/auth',
+
   ],
+  axios: {
+    proxy: true,
+    BaseURL: process.env.API_URL,
+    // proxyHeaders: false,
+    // credentials: false
+  },
+  proxy: {
+    "/api": process.env.URL
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      dark: false,
       themes: {
         dark: {
           primary: colors.blue.darken2,
@@ -61,5 +74,36 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+  router: {
+    middleware: ['auth']
+  },
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: '/api/users/login',
+            method: 'post',
+            propertyName: "token"
+          },
+          logout: {
+            url: '/api/users/logout',
+            method: 'post',
+          },
+          user: {
+            url: '/api/users/user',
+            method: 'get',
+          }
+        }
+        },
+
+      redirect: {
+        login: '/users/login',
+        logout: '/',
+        callback: '/users/login',
+        home: '/'
+      },
+  },
   }
 }
